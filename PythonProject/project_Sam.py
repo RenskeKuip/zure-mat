@@ -1,9 +1,12 @@
-import csv
+import xmltodict
 import random
+
+
+ovNummer = input('dit leest de ov-chipkaart scanner:')#deze code simuleert het scannen van een OV chip
+open()
 
 #dit is de layout van de code van het menu pas op de cijfers staan niet op volgorde
 keuze = int
-
 while keuze != 5:
     print('1: Ik wil informatie opvragen')
     print('2: Ik wil mijn fiets plaatsen')

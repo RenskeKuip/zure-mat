@@ -1,6 +1,7 @@
 import csv
 import random
 
+#dit is de layout van de code van het menu pas op de cijfers staan niet op volgorde
 keuze = int
 
 while keuze != 5:
@@ -14,10 +15,13 @@ while keuze != 5:
     except ValueError:
         print('U heeft geen geldig nummer ingevoerd')
     if keuze == 4:
-        aantal_kluizen_vrij()
+        register()#Roept de functie aan die
     elif keuze == 1:
-        nieuwe_kluis()
+        info()
     elif keuze == 2:
-        kluis_openen()
-    elif keuze == 3: #does nothing
-        print('This is not a requirement for the assignment')
+        stall()
+    elif keuze == 3:
+        fetch()
+
+
+# functies die nu erin staan:

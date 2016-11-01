@@ -1,43 +1,35 @@
-import csv
+import json
 import random
 
-#De functies:
-#Het openen en lezen van het bestand en als die nog niet bestaat, aanmaken.
-def csvToList():
-    global bikeList
-    bikeList = []
-    try:
-        file = open('fietsen.csv', 'r')
-    except FileNotFoundError:
-        open('fietsen.csv', 'w')
-        file = open('fietsen.csv', 'r')
-    CSVFile = csv.reader(file)
-    for line in CSVFile:
-        bikeList.append(line)
+def loadJSON():
+    global database
+    file = (open('database.txt', 'r')).read()
+    database = json.loads(file)
 
-#Het schrijven van de lijst met gegevens naar het CSV bestand.
-def listToCSV():
-    global bikeList
-    file = open('fietsen.csv', 'w', newline= '')
-    CSVFile = csv.writer(file)
-    for bike in bikeList:
-        CSVFile.writerow(bike)
+def writeJSON():
+    global database
+    text = json.dumps(database)
+    with open('database.txt', 'w') as file:
+        file.write(text)
 
-def randomNumber():
+def randomID():
+    global database
     number = ''
-    for i in range(10):
-        number += str(random.randrange(0, 9))
-    return number
-
-def registrerBike():
-    global bikeList
-    if bikeList == []:
-        bikeList = [[ovNummer,randomNumber()]]
+    for loop in range(1):
+        number += str(random.randrange(0,9))
+    if number in database:
+        return randomID()
     else:
-        temp = ovNummer,randomNumber()
-        bikeList.append(temp)
+        return number
 
-ovNummer = 12345
-csvToList()
-registrerBike()
-listToCSV()
+def register():
+    global database
+    loadJSON()
+    ID = randomID()
+    firstNane = input('Wat is je voornaam: ')
+    lastName = input('Wat is je achternaam: ')
+    name = firstNane + ' ' + lastName
+    database[ID] = {'name' : name, 'present' : False}
+    writeJSON()
+
+register()

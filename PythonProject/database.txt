@@ -1,1 +1,1 @@
-{}
+{"5226334070": {"present": true, "name": "Piet Hein"}, "3311883840": {"present": true, "name": "Jasper Smienk"}, "6861051537": {"present": false, "name": "Tafel Blad"}, "7182460873": {"present": false, "name": "Jan Smit"}, "7234103254": {"present": false, "name": "Some Guy"}, "3486880506": {"present": true, "name": "Jan Hendrik van der Domme", "since": "2016-11-01 16:52:20.163192"}}

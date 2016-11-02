@@ -5,17 +5,19 @@ import random
 
 #open()
 #dit is het invoeren van de ov chipkaart
-chipkaartnummer =  input('dit leest de ov-chipkaart scanner? (voer hier een het getal van je ov chipkaart in zonder de spaties):')#deze code simuleert het scannen va. een OV chip
-if len(chipkaartnummer)==16:
-    try:
-        int(chipkaartnummer)
-    except:
-        print('U heeft geen getal ingevoerd')
-    chipkaartnummer =  input('dit leest de ov-chipkaart scanner:')
-else:
-    print('de code was niet 16 tekens lang ')
-    chipkaartnummer =  input('dit leest de ov-chipkaart scanner? (voer hier een het getal van je ov chipkaart in zonder de spaties):')
-
+def chipscan():
+    chipkaartnummer =  input('dit leest de ov-chipkaart scanner? (voer hier een het getal van je ov chipkaart in zonder de spaties):')#deze code simuleert het scannen va. een OV chip
+    if len(chipkaartnummer) == 16:
+        try:
+            chipkaartnummer = int(chipkaartnummer)
+            return chipkaartnummer
+        except:
+            print('U heeft geen getal ingevoerd')
+            chipscan()
+    else:
+        print('de code was niet 16 tekens lang ')
+        chipscan()
+print(chipscan())
 
 
 

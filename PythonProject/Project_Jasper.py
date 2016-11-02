@@ -28,7 +28,8 @@ def register():
     loadJSON()
     ID = randomID()
     name = input('Wat is je voledige naam: ')
-    database[ID] = {'naam' : name, 'aanwezig' : False}
+    ovChip = chipscan()
+    database[ID] = {'naam' : name, 'aanwezig' : False, 'ovchip' : ovChip}
     print('Het unieke nummer van jouw fiets is: ' + str(ID))
     if input('Wil je je fiets gelijk stallen? (Y/N): ') == 'Y':
         database[ID]['aanwezig'] = True
@@ -57,8 +58,8 @@ def pickup():
     elif database[ID]['aanwezig'] is False:
         print('Deze fiets staat niet in de stalling')
     else:
-        name = input('Geef jouw voledig name op: ')
-        if database[ID]['naam'] != name:
+        ovChip = chipscan()
+        if database[ID]['ovchip'] != ovChip:
             print('Jij bent niet de eigenaar van deze fiets')
         else:
             database[ID]['aanwezig'] = False
@@ -78,6 +79,20 @@ def count():
     else:
        print('Er staan op dit moment ' + str(count) + ' fietsen in de stalling')
     print('Er zijn nog ' + str(500 - count) + ' plekken beschikbaar')
+
+
+def chipscan():
+    chipkaartnummer =  input('Dit leest de ov-chipkaart scanner? (voer hier een het getal van je ov chipkaart in zonder de spaties): ')#deze code simuleert het scannen va. een OV chip
+    if len(chipkaartnummer) == 16:
+        try:
+            chipkaartnummer = int(chipkaartnummer)
+            return chipkaartnummer
+        except:
+            print('U heeft geen getal ingevoerd')
+            chipscan()
+    else:
+        print('De code was niet 16 tekens lang ')
+        chipscan()
 
 
 

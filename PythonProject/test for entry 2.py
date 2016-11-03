@@ -43,12 +43,6 @@ def register():
     global database
     loadJSON()
 
-    if counter 
-    global counter
-    counter += 1
-    chipscan()
-    ID = randomID()
-
     def nameAsk():
         window = Toplevel(root)
         Label(window, text="Wat is uw volledige naam? ").pack(ipady=5, ipadx=5, padx=2, pady=2)
@@ -64,6 +58,13 @@ def register():
 
         b1 = Button(window, text="continue", command= lambda: callback())
         b1.pack()
+
+    if counter > 0:
+        nameAsk()
+    global counter
+    counter += 1
+    chipscan()
+    ID = randomID()
 
     def fietsCode():
         database[ID] = {'naam' : name, 'aanwezig' : False, 'ovchip' : ovChip}
@@ -142,25 +143,25 @@ def chipscan():
 
     def callback1():
         print(entry.get())
+
         global chipkaartnummer
         chipkaartnummer = entry.get()
 
-    b1 = Button(window, text="submit", command=lambda: callback1())
+        if len(chipkaartnummer) == 16:
+            try:
+                chipkaartnummer = int(chipkaartnummer)
+                return chipkaartnummer
+                register()
+            except:
+                showinfo(message='U heeft geen getal ingevoerd')
+                chipscan()
+        else:
+            showinfo(message='De code was niet 16 tekens lang ')
+            chipscan()
+
+    b1 = Button(window, text="submit", command= lambda: callback1())
     b1.pack()
 
-
-    chipkaartnummer = str(1234123412341234)
-    if len(chipkaartnummer) == 16:
-        try:
-            chipkaartnummer = int(chipkaartnummer)
-            return chipkaartnummer
-            register()
-        except:
-            showinfo(message='U heeft geen getal ingevoerd')
-            chipscan()
-    else:
-        showinfo(message='De code was niet 16 tekens lang ')
-        chipscan()
 
 root = Tk()
 

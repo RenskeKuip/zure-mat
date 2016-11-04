@@ -9,7 +9,13 @@ chipkaartnummer = ""
 name = ""
 counter = 0
 counter1 = 0
+counter2 = 0
 ID = ""
+def backToMenu():
+    root.deiconify()
+#
+# def closeTab():
+#     window.withdraw()
 
 def loadJSON():
     global database
@@ -37,12 +43,12 @@ def randomID():
 #     content = entry.get()
 #     print(content)
 
-
 entryb1 = StringVar
 
 def register():
     global database
     loadJSON()
+    # window = Toplevel(root)
 
     def nameAsk():
         window = Toplevel(root)
@@ -60,16 +66,27 @@ def register():
 
         b1 = Button(window, text="continue", command= lambda: callback())
         b1.pack()
-        # ID = randomID()
-        # counter += 1
 
     def fietsCode():
         ovChip = chipkaartnummer
         database[ID] = {'naam' : name, 'aanwezig' : False, 'ovchip' : ovChip}
         showinfo(message='Het unieke nummer van jouw fiets is: ' + str(ID))
-        if input('Wil je je fiets gelijk stallen? (Y/N): ') == 'Y':
+        window = Toplevel(root)
+
+        def meteenStallen():
             database[ID]['aanwezig'] = True
             database[ID]['sinds'] = str(datetime.datetime.now())
+            def back():
+                backToMenu()
+            back()
+
+
+        Label(window, text="Wilt u uw fiets meteen stallen? ").pack(ipady=5, ipadx=5, padx=2, pady=2)
+        b1 = Button(window, text="Ja", command= lambda: meteenStallen())
+        b1.pack(side=LEFT)
+
+        b2 = Button(window, text="Nee", command= lambda: backToMenu())
+        b2.pack(side=RIGHT)
         writeJSON()
 
     if counter > 0:
@@ -86,18 +103,18 @@ def store():
     loadJSON()
     global counter
 
-    # window = Toplevel(root)
-    # Label(window, text="Geef het 10 cijferig nummer van jouw de fiets: ").pack()
-    # entry1 = Entry(window, textvariable=entryb1)
-    # entry1.pack()
-    #
-    # def callback():
-    #     print(entry1.get())
-    #     global ID
-    #     ID = entry1.get()
-    #
-    # b1 = Button(window, text="continue", command=callback())
-    # b1.pack()
+    window = Toplevel(root)
+    Label(window, text="Geef het 10 cijferig nummer van jouw de fiets: ").pack()
+    entry1 = Entry(window, textvariable=entryb1)
+    entry1.pack()
+
+    def callback():
+        print(entry1.get())
+        global ID
+        ID = entry1.get()
+
+    b1 = Button(window, text="continue", command=callback())
+    b1.pack()
     ID = input('Geef het 10 cijferig nummer van jouw de fiets: ')
     if ID not in database:
         showinfo(message='Deze fiets is niet bij ons bekend')
@@ -139,17 +156,20 @@ def count():
        showinfo(message='Er staan op dit moment ' + str(count) + ' fietsen in de stalling')
     showinfo(message='Er zijn nog ' + str(500 - count) + ' plekken beschikbaar')
 
-
 def chipscan():
+
     root.withdraw()
     #haalt root weg, terug krijgen is root.deiconify()
     global counter1
     counter1 += 1
     # counter1 is zodat ie niet nog een keer door bepaalde code loopt
     window = Toplevel(root)
-    Label(window, text="Dit leest de ov-chipkaart scanner? (voer hier een het getal van je ov chipkaart in zonder de spaties): ").pack(ipady=5, ipadx=5, padx=2, pady=2)
+    Label(window, text="Dit leest de ov-chipkaart scanner? \n(voer hier een het getal van je ov chipkaart in zonder de spaties): ").pack(ipady=5, ipadx=5, padx=2, pady=2)
     entry = Entry(window)
     entry.pack()
+
+    def closeTab():
+        window.withdraw()
 
     def callback1():    # geeft chipkaartnummer waarde van entry
         # print(entry.get())
@@ -159,9 +179,7 @@ def chipscan():
         if len(chipkaartnummer) == 16:
             try:
                 int(chipkaartnummer)
-                # print(chipkaartnummer, "you did it!")
                 register()
-                # return chipkaartnummer
             except:
                 showinfo(message='U heeft geen getal ingevoerd')
                 print("GEEN GETAL")  # is voor test
@@ -172,10 +190,10 @@ def chipscan():
             print("NIET LANG")  # is test
             # quit(window)
             chipscan()
+        closeTab()
 
     b1 = Button(window, text="submit", command= lambda: callback1())
     b1.pack()
-    # root.deiconify()
 
 root = Tk()
 nsBlue = '#002D72'
@@ -188,8 +206,15 @@ label = Label(master=root,
               foreground=nsBlue,
               background=nsYellow,
               width=15,
-              height=5)
+              height=2)
 label.pack()
+
+label1 = Label(master=root,
+              text='Welkom bij de NS fietsenstalling. \nSelecteer wat u wilt doen.',
+              font =("Italic",15),
+              foreground=nsBlue,
+              background=nsYellow)
+label1.pack()
 
 button = Button(master=root,
                 text="Fiets registreren",

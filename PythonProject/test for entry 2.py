@@ -50,6 +50,9 @@ def register():
     loadJSON()
     # window = Toplevel(root)
 
+    def closeTab():
+        window.withdraw()
+
     def nameAsk():
         window = Toplevel(root)
         Label(window, text="Wat is uw volledige naam? ").pack(ipady=5, ipadx=5, padx=2, pady=2)
@@ -66,6 +69,7 @@ def register():
 
         b1 = Button(window, text="continue", command= lambda: callback())
         b1.pack()
+        closeTab()
 
     def fietsCode():
         ovChip = chipkaartnummer
@@ -88,6 +92,7 @@ def register():
         b2 = Button(window, text="Nee", command= lambda: backToMenu())
         b2.pack(side=RIGHT)
         writeJSON()
+
 
     if counter > 0:
         nameAsk()
@@ -172,7 +177,6 @@ def chipscan():
         window.withdraw()
 
     def callback1():    # geeft chipkaartnummer waarde van entry
-        # print(entry.get())
         global chipkaartnummer
         chipkaartnummer = entry.get()
 
@@ -183,7 +187,6 @@ def chipscan():
             except:
                 showinfo(message='U heeft geen getal ingevoerd')
                 print("GEEN GETAL")  # is voor test
-                quit(window)
                 chipscan()
         else:
             showinfo(message='De code was niet 16 tekens lang ')
